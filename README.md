@@ -1,7 +1,7 @@
 
-# Modelo Docker com PHP, MySQL e NGNIX
+# Modelo Docker com NGNIX [PHP 7 e PHP 8] , Database [MySQL and PostgreSQL]
 
-# Passos:
+# Passos para importação de dados para o MySQL:
 
 1. Faça o dump da base de dados.
 2. Remova as inormações de que ligue ao database original
@@ -22,7 +22,7 @@ Isso já monta todo o ambiente e importa a base de dados.
 | 8  | http://sis8.localhost/  |  - |
 
 > [!NOTE]
-> Ambos conectam no mesmo Database ( MySQL )
+> Ambos tem acessos aos Databases ( MySQL e PostgreSQL )
 
 
 
