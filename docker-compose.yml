@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   nginx:
@@ -13,6 +13,7 @@ services:
       - php7
       - php8
       - mysql
+      - postgres
     networks:
       - web_net
 
@@ -58,9 +59,25 @@ services:
     networks:
       - web_net
 
+  postgres:
+    image: postgres:latest
+    container_name: postgres_ctn
+    environment:
+      POSTGRES_DB: ${PG_DATABASE}
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    volumes:
+      - postgres_v:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - web_net
+
 volumes:
   mysql_v:
     name: mysql_vol
+  postgres_v:
+    name: postgres_vol
 
 networks:
   web_net:
