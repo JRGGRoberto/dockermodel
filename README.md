@@ -71,6 +71,20 @@ PastaRAIZ/
 
 Altere o arquivo *hosts*
 
+- Windows
+
+~~~text
+C:\Windows\System32\drivers\etc\host
+~~~
+
+- Linux
+
+~~~text
+ /etc/hosts
+~~~
+
+Adicionar a informação: 
+
 ~~~text
 127.0.0.1 sis7
 127.0.0.1 sis8
