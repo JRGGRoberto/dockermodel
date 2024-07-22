@@ -74,7 +74,7 @@ Altere o arquivo *hosts*
 - Windows
 
 ~~~text
-C:\Windows\System32\drivers\etc\host
+C:\Windows\System32\drivers\etc\hosts
 ~~~
 
 - Linux
