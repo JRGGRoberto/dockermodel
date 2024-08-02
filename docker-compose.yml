@@ -33,7 +33,7 @@ services:
     build:
       context: ./docker/php
       args:
-        PHP_VERSION: 8.1-fpm
+        PHP_VERSION: 8.2-fpm
     container_name: php8_ctn
     volumes:
       - ./www:/var/www/html
