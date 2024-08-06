@@ -43,6 +43,7 @@ PastaRAIZ/
 │   │   ├── Dockerfile
 │   │   └── php.ini
 │   └── ngnix/
+│       ├── fastcgi_params
 │       └── nginx.conf
 ├── www/
 │   ├── php7/
@@ -52,11 +53,11 @@ PastaRAIZ/
 │   │   ├── dbteste.php   Teste de DB
 │   │   └── outrasPastas/
 │   └── php8/
-│   │   ├── assets/
-│   │   ├── index.php  
-│   │   ├── info.php      phpinfo()
-│   │   ├── dbteste.php   Teste de DB
-│   │   └── outrasPastas/
+│       ├── assets/
+│       ├── index.php  
+│       ├── info.php      phpinfo()
+│       ├── dbteste.php   Teste de DB
+│       └── outrasPastas/
 ├── .env
 ├── .gitignore
 ├── docker-compose.yml
