@@ -1,0 +1,95 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx_ctn
+    ports:
+      - "80:80"
+    volumes:
+      - ./www:/var/www/html
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/fastcgi_params:/etc/nginx/fastcgi_params
+
+    depends_on:
+      - php7
+      - php8
+      - mariadb
+      - postgres
+    networks:
+      - web_net
+
+  php7:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile-php7
+    container_name: php7_ctn
+    volumes:
+      - ./www:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - web_net
+  
+
+  php8:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+      args:
+        PHP_VERSION: "8.2"
+    container_name: php8_ctn
+    volumes:
+      - ./www:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+    networks:
+      - web_net
+
+  mariadb:
+    image: mariadb:10.11.14
+    container_name: mariadb_ctn
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD_R}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mariadb_v:/var/lib/mysql
+      - ./docker/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mariadb/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    command: --sql_mode="STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" --max_allowed_packet=256M
+    ports:
+      - "3306:3306"
+    networks:
+      - web_net
+      
+  postgres:
+    image: postgres:latest
+    container_name: postgres_ctn
+    environment:
+      POSTGRES_DB: ${PG_DATABASE}
+      POSTGRES_USER: ${PG_USERNAME}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    volumes:
+      - postgres_v:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - web_net
+
+  composer:
+    image: composer:2
+    container_name: composer_ctn
+    volumes:
+      - ./www:/app
+    working_dir: /app
+    networks:
+      - web_net
+
+volumes:
+  mariadb_v:
+    name: mariadb_vol
+  postgres_v:
+    name: postgres_vol
+
+networks:
+  web_net:
+    driver: bridge

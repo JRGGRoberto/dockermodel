@@ -1,0 +1,10 @@
+# docker/php/Dockerfile-php7
+FROM php:7.4-fpm-bullseye
+
+# Instalar dependências e extensões em UMA layer
+RUN apt-get update \
+    && docker-php-ext-install \
+        pdo \
+        pdo_mysql \
+        mysqli \
+    && rm -rf /var/lib/apt/lists/*
